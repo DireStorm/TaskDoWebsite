@@ -38,6 +38,20 @@ const getTodo = async (req, res) => {
 const createTodo = async (req, res) => {
     const {task, deadline, description} = req.body
 
+    let emptyFields = []
+
+    if(!task) {
+        emptyFields.push('task')
+    }
+    if(!deadline) {
+        emptyFields.push('deadline')
+    }
+    //You can add more checks if you have any more required fields (description is not required so it doesn't need to be checked)
+
+    if (emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please fill in all the fields', emptyFields})
+    }
+
     // creating a document in the database (for the todo item)
     try {
         const todo = await Todo.create({task, deadline, description})

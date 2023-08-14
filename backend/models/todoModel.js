@@ -15,8 +15,12 @@ const todoSchema = new Schema({
     description: {
         type: String,
         required: false
-    }
-}, { timestamps: true })
+    },
+    // createdAt: {
+    //     type: String,
+    //     default: new Date().getMonth() + '-' + new Date().getDate() + '-' + new Date().getFullYear()
+    // }
+}, {timestamps: true}) //{createdAt:false}
 // timestamps keeps track of when a todo item is created/updated
 
 //Creates model for a todo item (for the todo item collection)
