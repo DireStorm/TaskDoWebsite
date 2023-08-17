@@ -23,7 +23,7 @@ const TodoDetails = ({ todo }) => {
             <h4>{todo.task}</h4>
             <p><strong>Deadline (MM/DD/YYYY): </strong>{todo.deadline}</p>
             {todo.description ? <p><strong>Description: </strong>{todo.description}</p> : <p>No Description</p>}
-            <p>{formatDistanceToNow(new Date(todo.createdAt), { addSuffix: true})}</p>
+            <p>{formatDistanceToNow(new Date(todo.createdAt), { addSuffix: true })}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
         </div>
     )
