@@ -1,15 +1,24 @@
 import { useTodosContext } from "../hooks/useTodosContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 //date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const TodoDetails = ({ todo }) => {
     const { dispatch } = useTodosContext()
+    const { user } = useAuthContext()
 
     const handleClick = async () => {
+        if (!user) {
+            return
+        }
+
         //Sends DELETE request to database -> to delete todo item
         const response = await fetch('/api/todos/' + todo._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
         const json = await response.json()
 

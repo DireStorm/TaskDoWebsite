@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { useTodosContext } from "../hooks/useTodosContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const TodoForm = () => {
     const { dispatch } = useTodosContext()
+    const { user } = useAuthContext()
+
     const [task, setTask] = useState('')
     const [deadline, setDeadline] = useState('')
     const [description, setDescription] = useState('') // This will be important later, since descriptions aren't required
@@ -13,6 +16,11 @@ const TodoForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        if (!user) {
+            setError('You must be logged in to submit workouts!')
+            return
+        }
+
         const todo = {task, deadline, description}
 
         //Updating Database
@@ -20,7 +28,8 @@ const TodoForm = () => {
             method: 'POST',
             body: JSON.stringify(todo),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

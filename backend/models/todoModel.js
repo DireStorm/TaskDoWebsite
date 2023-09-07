@@ -16,6 +16,10 @@ const todoSchema = new Schema({
         type: String,
         required: false
     },
+    user_id: {
+        type: String,
+        required: true
+    }
     // CreatedDate: {
     //     type: String,
     //     default: new Date().getMonth() + '-' + new Date().getDate() + '-' + new Date().getFullYear()

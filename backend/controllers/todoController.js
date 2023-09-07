@@ -6,7 +6,9 @@ const getTodos = async (req, res) => {
     // finds all todo items, since nothing is passed through curly braces
     // sorts all items in descending order based on when they were created (-1, means descending)
     // YOU CAN CHANGE THIS LATER TO SORT THEM BASED ON DEADLINE OR OTHER METRICS
-    const todos = await Todo.find({}).sort({createdAt: -1}) 
+    const user_id = req.user._id
+
+    const todos = await Todo.find({ user_id }).sort({createdAt: -1}) 
 
     res.status(200).json(todos) 
 
@@ -54,7 +56,8 @@ const createTodo = async (req, res) => {
 
     // creating a document in the database (for the todo item)
     try {
-        const todo = await Todo.create({task, deadline, description})
+        const user_id = req.user._id
+        const todo = await Todo.create({task, deadline, description, user_id})
         res.status(200).json(todo)
     } catch (error) {
         res.status(400).json({error: error.message})
